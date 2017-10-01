@@ -2,3 +2,12 @@
 87
 "ola khe aze"
             "8787"
+for
+array
+return
+elseif
+else
+array
++-*/
+>=
+&&
