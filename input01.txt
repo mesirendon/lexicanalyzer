@@ -1,0 +1,7 @@
+if { "cadena" } then {
+  puts [set x expr {1 + 2} ];
+  # ignorar comentario
+}
+
+2.5598055NOT3.88
+1.&23948998
