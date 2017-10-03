@@ -1,4 +1,5 @@
 import sys
+import re
 import ply.lex as lex
 
 
@@ -100,7 +101,7 @@ class Lexer:
 
     def t_token_string(self, t):
         r'\".+\"'
-        t.value = str(t.value)
+        t.value = str(re.sub('\"', '', t.value))
         return t
 
     def t_token_igual_str(self, t):
