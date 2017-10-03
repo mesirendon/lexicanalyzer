@@ -127,7 +127,7 @@ class Lexer:
         t.lexer.lineno += len(t.value)
 
     def t_error(self, t):
-        print("Error lexico (linea:" + (str(t.lineno)) + ", posicion:" + (str(self.find_column(t))) + ")")
+        print("Error lexico (linea:" + (str(t.lineno + 1)) + ", posicion:" + (str(self.find_column(t))) + ")")
         t.lexer.skip(1000)
 
     t_ignore = ' \t'
