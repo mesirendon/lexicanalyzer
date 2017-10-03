@@ -26,6 +26,8 @@ class Lexer:
         'array'    : 'array',
         'proc'     : 'proc',
         'return'   : 'return',
+        'stdin'    : 'stdin',
+        'token_igual_str':'eq'
     }
 
     tokens = [
@@ -73,9 +75,7 @@ class Lexer:
     t_token_menor       = r'<'
     t_token_mayor_igual = r'>='
     t_token_menor_igual = r'<='
-    t_token_igual_str   = r'eq'
     t_token_igual_num   = r'=='
-    t_token_diff_str    = r'ne'
     t_token_diff_num    = r'!='
     t_token_and         = r'\&&'
     t_token_or          = r'\|\|'
@@ -101,6 +101,16 @@ class Lexer:
     def t_token_string(self, t):
         r'\".+\"'
         t.value = str(t.value)
+        return t
+
+    def t_token_igual_str(self, t):
+        r'eq'
+        t.value = str('token_igual_str')
+        return t
+
+    def t_token_diff_str(self, t):
+        r'ne'
+        t.value = str('token_diff_str')
         return t
 
     def t_id(self, t):
@@ -141,7 +151,7 @@ class Lexer:
             if not tok:
                 break
             if (tok.type in ["token_integer", "token_string", "token_double", "id"]):
-                print("<" + tok.type + "," +  tok.value + "," +  str(tok.lineno) + "," + str(self.find_column(tok)) + ">")
+                print("<" + tok.type + "," +  str(tok.value) + "," +  str(tok.lineno) + "," + str(self.find_column(tok)) + ">")
             else:
                 print("<" + tok.type + "," + str(tok.lineno) +  "," + str(self.find_column(tok)) + ">")
 
