@@ -28,9 +28,9 @@ class Lexer:
     }
 
     tokens = [
-            'integer',
-            'double',
-            'string',
+            'token_integer',
+            'token_double',
+            'token_string',
             'id',
             'token_llave_izq',
             'token_llave_der',
@@ -87,17 +87,17 @@ class Lexer:
     t_token_pot         = r'\*\*'
 
 
-    def t_double(self, t):
+    def t_token_double(self, t):
         r'\d+\.\d+'
         t.value = float(t.value)
         return t
 
-    def t_integer(self, t):
+    def t_token_integer(self, t):
         r'\d+'
         t.value = int(t.value)
         return t
 
-    def t_string(self, t):
+    def t_token_string(self, t):
         r'\".+\"'
         t.value = str(t.value)
         return t
