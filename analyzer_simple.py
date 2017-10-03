@@ -1,6 +1,7 @@
 import sys
 import ply.lex as lex
 
+
 class Lexer:
     data = ''
 # Palabras reservadas
@@ -115,8 +116,8 @@ class Lexer:
         t.lexer.lineno += len(t.value)
 
     def t_error(self, t):
-        print("Error lexico linea:" + (str(t.lineno)) + " posicion:" + (str(self.find_column(t))))
-        t.lexer.skip(1)
+        print("Error lexico (linea:" + (str(t.lineno)) + ", posicion:" + (str(self.find_column(t))) + ")")
+        t.lexer.skip(1000)
 
     t_ignore = ' \t'
 
@@ -140,9 +141,9 @@ class Lexer:
             if not tok:
                 break
             if (tok.type in ["token_integer", "token_string", "token_double", "id"]):
-                print("<", tok.type, ",", tok.value, ",", str(tok.lineno), ",", str(self.find_column(tok)), ">")
+                print("<" + tok.type + "," +  tok.value + "," +  str(tok.lineno) + "," + str(self.find_column(tok)) + ">")
             else:
-                print("<", tok.type + ",", str(tok.lineno), ",", str(self.find_column(tok)), ">")
+                print("<" + tok.type + "," + str(tok.lineno) +  "," + str(self.find_column(tok)) + ">")
 
 
 
