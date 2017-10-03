@@ -115,7 +115,7 @@ class Lexer:
         t.lexer.lineno += len(t.value)
 
     def t_error(self, t):
-        print("Illegal character '%s'" % t.value[0])
+        print("Error lexico linea:" + (str(t.lineno)) + " posicion:" + (str(self.find_column(t))))
         t.lexer.skip(1)
 
     t_ignore = ' \t'
@@ -139,7 +139,7 @@ class Lexer:
             tok = self.lexer.token()
             if not tok:
                 break
-            if (tok.type in ["id", "integer", "string", "double", "id"]):
+            if (tok.type in ["token_integer", "token_string", "token_double", "id"]):
                 print("<", tok.type, ",", tok.value, ",", str(tok.lineno), ",", str(self.find_column(tok)), ">")
             else:
                 print("<", tok.type + ",", str(tok.lineno), ",", str(self.find_column(tok)), ">")
