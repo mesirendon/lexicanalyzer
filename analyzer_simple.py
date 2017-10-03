@@ -31,6 +31,7 @@ class Lexer:
             'integer',
             'double',
             'string',
+            'id',
             'token_llave_izq',
             'token_llave_der',
             'token_dollar',
@@ -55,7 +56,7 @@ class Lexer:
             'token_mul',
             'token_div',
             'token_mod',
-            'token_pot',
+            'token_pot'
             ] + list(reserved.values())
 
 # Tokens simples
@@ -101,9 +102,12 @@ class Lexer:
         t.value = str(t.value)
         return t
 
-    def t_reserved(self, t):
-        r'[a-zA-Z_][a-zA-Z_0-9]*'
-        t.type = self.reserved.get(t.value,'ID')
+    def t_id(self, t):
+        r'[a-zA-Z_][a-zA-Z_]*'
+        if t.value in self.reserved:
+            t.type = self.reserved.get(t.value)
+        else:
+            t.type = str('id')
         return t
 
     def t_newline(self, t):
@@ -135,7 +139,7 @@ class Lexer:
             tok = self.lexer.token()
             if not tok:
                 break
-            if (tok.type in ["id", "integer", "string", "double"]):
+            if (tok.type in ["id", "integer", "string", "double", "id"]):
                 print("<", tok.type, ",", tok.value, ",", str(tok.lineno), ",", str(self.find_column(tok)), ">")
             else:
                 print("<", tok.type + ",", str(tok.lineno), ",", str(self.find_column(tok)), ">")

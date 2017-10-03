@@ -1,16 +1,4 @@
-23.9887
-87
-"ola khe aze"
-            "8787"
-for
-{   }
-array
-return
-elseif
-else
-array
-+-*/
->=
-&&
-||
-**
+if { "cadena" } then {
+  puts [set x expr {1 + 2} ];
+  # ignorar comentario
+}
