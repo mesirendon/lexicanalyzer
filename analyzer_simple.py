@@ -135,10 +135,8 @@ class Lexer:
     def find_column(self, token):
         last_cr = self.data.rfind('\n', 0, token.lexpos)
         if last_cr < 0:
-            last_cr = 0
-            column = (token.lexpos - last_cr) + 1
-        else:
-            column = (token.lexpos - last_cr)
+            last_cr = -1
+        column = (token.lexpos - last_cr)
         return column
 
     def build(self, data):
