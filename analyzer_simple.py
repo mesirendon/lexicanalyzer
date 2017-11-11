@@ -113,7 +113,7 @@ def t_token_diff_str(t):
     return t
 
 def t_id(t):
-    r'[a-zA-Z_][a-zA-Z_]*'
+    r'[a-zA-Z_][a-zA-Z_]*(\d*)?'
     if t.value in reserved:
         t.type = reserved.get(t.value)
     else:
@@ -160,8 +160,6 @@ lexer = lex.lex()
 if __name__ == '__main__':
     # Necesita un archivo usando python. Ejemplo: python analyzer_simple.py < in00.txt
     for line in sys.stdin:
-        # if line.strip().startswith("#"):
-            # continue
         data += line
     lexer.input(data)
     lexerRun(data, lexer)
