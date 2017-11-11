@@ -26,7 +26,8 @@ reserved = {
     'proc'            : 'proc',
     'return'          : 'return',
     'stdin'           : 'stdin',
-    'token_igual_str' : 'eq'
+    'token_igual_str' : 'eq',
+    'case'            : 'case'
 }
 
 tokens = [

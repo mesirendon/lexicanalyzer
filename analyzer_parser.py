@@ -22,8 +22,12 @@ def p_declaration_list_2(p):
 def p_declaration(p):
     '''declaration : set_declaration
                    | gets_declaration
+                   | incr_declaration
                    | puts_declaration
-                   | ifs_declaration'''
+                   | ifs_declaration
+                   | whiles_declaration
+                   | fors_declaration
+                   | switchs_declaration'''
     pass
 
 def p_set_declaration(p):
@@ -82,6 +86,35 @@ def p_boolean_operator(p):
                         | token_menor_igual'''
     pass
 
+###############################################
+
+def p_incr_declaration(p):
+    'incr_declaration : incr id token_integer'
+    pass
+
+# Estructuras de control
+def p_whiles_declaration(p):
+    'whiles_declaration : while token_llave_izq boolean_expresion token_llave_der token_llave_izq block token_llave_der'
+    pass
+
+def p_fors_declaration(p):
+    'fors_declaration : for token_llave_izq set_declaration token_llave_der token_llave_izq expression token_llave_der token_llave_izq incr_declaration token_llave_der token_llave_izq block token_llave_der'
+    pass
+
+def p_switchs_declaration(p):
+    'switchs_declaration : switch token_dollar id token_llave_izq case_declaration default_declaration token_llave_der'
+    pass
+
+def p_case_declaration(p):
+    'case_declaration : case token_integer token_llave_izq block token_llave_der'
+    pass
+
+def p_default_declaration(p):
+    '''default_declaration : token_llave_izq block token_llave_der
+                           | empty'''
+    pass
+
+###############################################
 def p_empty(p):
     'empty :'
     pass
