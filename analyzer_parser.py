@@ -17,16 +17,19 @@ def p_declaration_list(p):
     pass
 
 def p_declaration(p):
-    '''declaration : set_declaration
+    '''declaration : set_declaration token_pyc
                    | gets_declaration token_pyc
-                   | puts_declaration
+                   | puts_declaration token_pyc
                    | token_cor_izq execution_list token_cor_der token_pyc
+                   | ifs_declaration
+                   | fors_declaration
+                   | incr_declaration
+                   | break token_pyc
+                   | continue token_pyc
+                   | whiles_declaration
+                   | switchs_declaration
+                   | procs
                    | empty'''
-                   # | incr_declaration
-                   # | ifs_declaration
-                   # | whiles_declaration
-                   # | fors_declaration
-                   # | switchs_declaration'''
     pass
 
 def p_execution_list(p):
@@ -38,7 +41,7 @@ def p_execution_list(p):
     pass
 
 def p_procs(p):
-    'procs : proc id token_llave_izq args token_llave_der'
+    'procs : proc id token_llave_izq args token_llave_der token_llave_izq declaration_list returns_declaration token_llave_der'
     pass
 
 def p_args(p):
@@ -55,22 +58,29 @@ def p_args_list(p):
                  | token_string'''
     pass
 
+def p_returns_declaration(p):
+    '''returns_declaration : return elem token_pyc
+                           | return token_pyc
+                           | empty'''
+    pass
+
 def p_exprs(p):
     '''exprs : expr token_llave_izq expression token_llave_der'''
     pass
 
 def p_set_declaration(p):
-    '''set_declaration : set id token_integer token_pyc
-                       | set id token_double token_pyc
-                       | set id token_string token_pyc
-                       | set id id token_pyc
-                       | set id token_cor_izq id args token_cor_der token_pyc
-                       | set id token_dollar id token_pyc
-                       | set id token_par_izq token_integer token_par_der elem token_pyc
-                       | set id token_par_izq token_integer token_par_der token_cor_izq exprs token_cor_der token_pyc
-                       | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der exprs token_pyc
-                       | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der elem token_pyc
-                       '''
+    '''set_declaration : set id token_integer
+                       | set id token_double
+                       | set id token_string
+                       | set id token_cor_izq gets_declaration token_cor_der
+                       | set id token_cor_izq execution_list token_cor_der
+                       | set id id
+                       | set id token_cor_izq id args token_cor_der
+                       | set id token_dollar id
+                       | set id token_par_izq token_integer token_par_der elem
+                       | set id token_par_izq token_integer token_par_der token_cor_izq exprs token_cor_der
+                       | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der exprs
+                       | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der elem'''
     pass
 
 def p_gets_declaration(p):
@@ -78,29 +88,58 @@ def p_gets_declaration(p):
     pass
 
 def p_puts_declaration(p):
-    '''puts_declaration : puts token_integer token_pyc
-                        | puts token_double token_pyc
-                        | puts token_string token_pyc
-                        | puts token_dollar id token_pyc'''
+    '''puts_declaration : puts token_integer
+                        | puts token_double
+                        | puts token_string
+                        | puts token_dollar id token_par_izq elem token_par_der
+                        | puts token_dollar id
+                        | puts token_cor_izq execution_list token_cor_der'''
     pass
 
-# def p_ifs_declaration(p):
-    # 'ifs_declaration : if token_llave_izq boolean_expresion token_llave_der then token_llave_izq block token_llave_der elseif_declaration else_declaration'
-    # pass
+def p_ifs_declaration(p):
+    'ifs_declaration : if token_llave_izq boolean_expresion token_llave_der then token_llave_izq declaration_list token_llave_der elseif_declaration else_declaration'
+    pass
 
-# def p_elseif_declaration(p):
-    # '''elseif_declaration : elseif token_llave_izq boolean_expresion token_llave_der token_llave_izq block token_llave_der elseif_declaration
-                          # | empty'''
-    # pass
+def p_elseif_declaration(p):
+    '''elseif_declaration : elseif token_llave_izq boolean_expresion token_llave_der then token_llave_izq declaration_list token_llave_der elseif_declaration
+                          | empty'''
+    pass
 
-# def p_else_declaration(p):
-    # '''else_declaration : else token_llave_izq block token_llave_der
-                        # | empty'''
-    # pass
+def p_else_declaration(p):
+    '''else_declaration : else token_llave_izq declaration_list token_llave_der
+                        | empty'''
+    pass
+
+def p_fors_declaration(p):
+    'fors_declaration : for token_llave_izq set_declaration token_llave_der token_llave_izq boolean_expresion token_llave_der token_llave_izq incr_declaration token_llave_der token_llave_izq declaration_list token_llave_der'
+    pass
+
+def p_incr_declaration(p):
+    'incr_declaration : incr id token_integer'
+    pass
+
+def p_whiles_declaration(p):
+    'whiles_declaration : while token_llave_izq boolean_expresion token_llave_der token_llave_izq declaration_list token_llave_der'
+    pass
+
+def p_switchs_declaration(p):
+    'switchs_declaration : switch token_dollar id token_llave_izq case_declaration default_declaration token_llave_der'
+    pass
+
+def p_case_declaration(p):
+    '''case_declaration : case token_integer token_llave_izq declaration_list token_llave_der case_declaration
+                        | empty'''
+    pass
+
+def p_default_declaration(p):
+    '''default_declaration : default token_llave_izq declaration_list token_llave_der
+                           | empty'''
+    pass
 
 def p_boolean_expresion(p):
     '''boolean_expresion : token_integer boolean_gateway
-                         | expression boolean_operator expression boolean_gateway'''
+                         | expression boolean_operator expression boolean_gateway
+                         | expression'''
     pass
 
 def p_boolean_gateway(p):
@@ -163,32 +202,6 @@ def p_subroutines(p):
     pass
 
 ###############################################
-
-# def p_incr_declaration(p):
-    # 'incr_declaration : incr id token_integer'
-    # pass
-
-# # Estructuras de control
-# def p_whiles_declaration(p):
-    # 'whiles_declaration : while token_llave_izq boolean_expresion token_llave_der token_llave_izq block token_llave_der'
-    # pass
-
-# def p_fors_declaration(p):
-    # 'fors_declaration : for token_llave_izq set_declaration token_llave_der token_llave_izq expression token_llave_der token_llave_izq incr_declaration token_llave_der token_llave_izq block token_llave_der'
-    # pass
-
-# def p_switchs_declaration(p):
-    # 'switchs_declaration : switch token_dollar id token_llave_izq case_declaration default_declaration token_llave_der'
-    # pass
-
-# def p_case_declaration(p):
-    # 'case_declaration : case token_integer token_llave_izq block token_llave_der'
-    # pass
-
-# def p_default_declaration(p):
-    # '''default_declaration : token_llave_izq block token_llave_der
-                           # | empty'''
-    # pass
 
 ###############################################
 def p_empty(p):

@@ -24,4 +24,4 @@ else{
 
 }
 
-if{1} {}
+if{1} {} # esto es un error falta el then
