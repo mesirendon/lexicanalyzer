@@ -13,8 +13,20 @@ def p_program(p):
 
 def p_declaration_list(p):
     '''declaration_list : declaration_list declaration
-                        | token_cor_izq execution_list token_cor_der token_pyc
                         | declaration'''
+    pass
+
+def p_declaration(p):
+    '''declaration : set_declaration
+                   | gets_declaration token_pyc
+                   | puts_declaration
+                   | token_cor_izq execution_list token_cor_der token_pyc
+                   | empty'''
+                   # | incr_declaration
+                   # | ifs_declaration
+                   # | whiles_declaration
+                   # | fors_declaration
+                   # | switchs_declaration'''
     pass
 
 def p_execution_list(p):
@@ -25,8 +37,14 @@ def p_execution_list(p):
                       | exprs'''
     pass
 
+def p_procs(p):
+    'procs : proc id token_llave_izq args token_llave_der'
+    pass
+
 def p_args(p):
     '''args : token_llave_izq args_list token_llave_der args
+            | token_llave_izq token_cor_izq execution_list token_cor_der token_llave_der args
+            | token_llave_izq execution_list token_llave_der args
             | empty'''
     pass
 
@@ -35,17 +53,6 @@ def p_args_list(p):
                  | token_dollar id token_par_izq token_integer token_par_der
                  | token_dollar id
                  | token_string'''
-    pass
-
-def p_declaration(p):
-    '''declaration : set_declaration
-                   | gets_declaration token_pyc
-                   | puts_declaration'''
-                   # | incr_declaration
-                   # | ifs_declaration
-                   # | whiles_declaration
-                   # | fors_declaration
-                   # | switchs_declaration'''
     pass
 
 def p_exprs(p):
@@ -57,7 +64,13 @@ def p_set_declaration(p):
                        | set id token_double token_pyc
                        | set id token_string token_pyc
                        | set id id token_pyc
-                       | set id token_dollar id token_pyc'''
+                       | set id token_cor_izq id args token_cor_der token_pyc
+                       | set id token_dollar id token_pyc
+                       | set id token_par_izq token_integer token_par_der elem token_pyc
+                       | set id token_par_izq token_integer token_par_der token_cor_izq exprs token_cor_der token_pyc
+                       | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der exprs token_pyc
+                       | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der elem token_pyc
+                       '''
     pass
 
 def p_gets_declaration(p):
@@ -126,8 +139,8 @@ def p_factor(p):
     pass
 
 def p_pow(p):
-    '''pow : token_menos elem
-           | token_not elem
+    '''pow : token_menos pow
+           | token_not pow
            | elem'''
     pass
 
@@ -136,12 +149,17 @@ def p_elem(p):
             | token_dollar id token_par_izq token_integer token_par_der
             | token_dollar id
             | token_string
+            | token_cor_izq id args token_cor_der
             | token_par_izq expression token_par_der'''
     pass
 
 def p_number(p):
     '''number : token_integer
               | token_double'''
+    pass
+
+def p_subroutines(p):
+    '''subroutines : '''
     pass
 
 ###############################################

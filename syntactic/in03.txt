@@ -10,6 +10,7 @@ set arreglo(4) $arreglo(2);
 set arreglo(4) $arreglo;
 set arreglo([expr{2 + 2}]) $arreglo;
 set variable3 [sum];
+set variable3 [sum {$c}];
 set arreglo(expr{2 + 2}); #error sintactico
 
 set variable ; #error
