@@ -27,11 +27,13 @@ proc rutina_sin_argumentos{}{
         }
     }
 
+    set var "abcdef";
+
+
     return;
     return $var;
     return [expr{$var + 1}];
 
-    set var "abcdef";
 }
 
 proc sum{{a}{b}{c}}{

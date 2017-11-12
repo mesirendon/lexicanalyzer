@@ -48,6 +48,7 @@ def p_args(p):
     '''args : token_llave_izq args_list token_llave_der args
             | token_llave_izq token_cor_izq execution_list token_cor_der token_llave_der args
             | token_llave_izq execution_list token_llave_der args
+            | token_llave_izq token_dollar id token_par_izq token_cor_izq execution_list token_cor_der token_par_der token_llave_der args
             | empty'''
     pass
 
@@ -59,8 +60,10 @@ def p_args_list(p):
     pass
 
 def p_returns_declaration(p):
-    '''returns_declaration : return elem token_pyc
-                           | return token_pyc
+    '''returns_declaration : return elem token_pyc returns_declaration
+                           | return token_cor_izq execution_list token_cor_der token_pyc returns_declaration
+                           | return token_dollar id token_pyc returns_declaration
+                           | return token_pyc returns_declaration
                            | empty'''
     pass
 
@@ -78,7 +81,7 @@ def p_set_declaration(p):
                        | set id token_cor_izq id args token_cor_der
                        | set id token_dollar id
                        | set id token_par_izq token_integer token_par_der elem
-                       | set id token_par_izq token_integer token_par_der token_cor_izq exprs token_cor_der
+                       | set id token_par_izq token_integer token_par_der token_cor_izq execution_list token_cor_der
                        | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der exprs
                        | set id token_par_izq token_cor_izq exprs token_cor_der token_par_der elem'''
     pass
@@ -111,11 +114,12 @@ def p_else_declaration(p):
     pass
 
 def p_fors_declaration(p):
-    'fors_declaration : for token_llave_izq set_declaration token_llave_der token_llave_izq boolean_expresion token_llave_der token_llave_izq incr_declaration token_llave_der token_llave_izq declaration_list token_llave_der'
+    'fors_declaration : for token_llave_izq set id token_integer token_llave_der token_llave_izq boolean_expresion token_llave_der token_llave_izq incr_declaration token_llave_der token_llave_izq declaration_list token_llave_der'
     pass
 
 def p_incr_declaration(p):
-    'incr_declaration : incr id token_integer'
+    '''incr_declaration : incr id token_integer
+                        | incr id'''
     pass
 
 def p_whiles_declaration(p):
@@ -213,9 +217,10 @@ def p_error(p):
     #print str(dir(cminus_lexer))
     if VERBOSE:
         if p is not None:
-            print "Syntax error at line " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value)
+            # print "Syntax error at line " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value)
+            raise Exception('syntax', str(p.lexer.lineno), str(p.value), str(analyzer_simple.find_column( p.lexer.token() )))
         else:
-            print "Syntax error at line: " + str(cminus_lexer.lexer.lineno)
+            print "Syntax error at line: " + str(analyzer_simple.lexer.lineno)
     else:
         raise Exception('syntax', 'error')
 
@@ -230,5 +235,8 @@ if __name__ == '__main__':
 
     f = open(fin, 'r')
     data = f.read()
-    print data
-    parser.parse(data, tracking=True)
+    try:
+        parser.parse(data, tracking=True)
+        print "El analisis sintactico ha finalizado correctamente."
+    except Exception as things:
+        print things.args
