@@ -218,7 +218,7 @@ def p_error(p):
     if VERBOSE:
         if p is not None:
             # print "Syntax error at line " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value)
-            raise Exception('syntax', str(p.lexer.lineno), str(p.value), str(analyzer_simple.find_column( p.lexer.token() )))
+            raise Exception('syntax', str(p.lexer.lineno), str(p.value), str(p))
         else:
             print "Syntax error at line: " + str(analyzer_simple.lexer.lineno)
     else:
