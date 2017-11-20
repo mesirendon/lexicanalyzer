@@ -1,0 +1,6 @@
+# Ejemplos con solo set
+set var 34;
+set var1 2.3;
+set var2 "texto largo";
+set var3 hola;
+set var4 $var;
