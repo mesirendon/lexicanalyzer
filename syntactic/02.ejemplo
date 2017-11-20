@@ -1,0 +1,5 @@
+# Ejemplos con puts
+puts 34;
+puts 2.43;
+puts "Hola mundo";
+puts $var12;
